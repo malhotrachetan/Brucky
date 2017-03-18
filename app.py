@@ -1,17 +1,18 @@
 from flask import *
-app=Flask(__name__, static_url_path='/static')
+app=Flask(__name__,static_url_path='/static')
 
 @app.route("/")
 def main():
     return render_template('main.html')
 
-@app.route('/showSignUp')
-def showsignUp():
+
+@app.route("/showSignUp")
+def showSignUP():
     return render_template('signup.html')
+
 
 @app.route('/signUp',methods=['POST'])
 def signUp():
-
     #read posted values from the form
     _name = request.form['inputName']
     _email = request.form['inputEmail']
@@ -25,5 +26,5 @@ def signUp():
 
 
 if __name__=="__main__":
-    app.run(host='127.0.0.1', port=8000)
+    app.run(host='127.0.0.1', port=8080)
     app.debug=True
