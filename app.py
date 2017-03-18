@@ -1,8 +1,8 @@
 from flask import *
 from flaskext.mysql import *
-from werkzeug import *
+from werkzeug import generate_password_hash, check_password_hash
 
-MySQL=MySQL()
+mysql=MySQL()
 app=Flask(__name__,static_url_path='/static')
 
 #configuring MySQL
@@ -10,7 +10,7 @@ app.config['MYSQL_DATABASE_USER']='root'
 app.config['MYSQL_DATABASE_PASSWORD']='bhoolnamat'
 app.config['MYSQL_DATABASE_DB']='brucky'
 app.config['MYSQL_DATABASE_HOST']='localhost'
-MySQL.init_app(app)
+mysql.init_app(app)
 
 
 @app.route("/")
@@ -37,7 +37,7 @@ def signUp():
 
             conn=MySQL.connect()
             cursor=conn.cursor()
-            _hashed_password= generate_password_hash(_password)
+            _hashed_password = generate_password_hash(_password)
             cursor.callproc('sp_createUser',(_name,_email,_hashed_password))
             data=cursor.fetchall()
 
@@ -53,9 +53,7 @@ def signUp():
     except Exception as e:
         return json.dumps({'error':str(e)})
 
-    """finally:
-        cursor.close();
-        conn.close();"""
+
 
 
 if __name__=="__main__":
