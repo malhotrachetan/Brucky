@@ -1,6 +1,8 @@
 $(function(){
 	$('#btnSignUp').click(function(){
-
+        var name = $('#txtname').val();
+        var email = $('#txtemail').val();
+		var pass = $('#txtPassword').val();
 		$.ajax({
 			url: '/signUp',
 			data: $('form').serialize(),

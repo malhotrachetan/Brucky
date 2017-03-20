@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json, request
+from flask import *
 from flaskext.mysql import MySQL
 from werkzeug import generate_password_hash
 
@@ -36,21 +36,22 @@ def signUp():
             # All Good, let's call MySQL
 
             conn = mysql.connect()
-            cursor = conn.cursor()
+            cur = conn.cursor()
             _hashed_password = generate_password_hash(_password)
-            cursor.callproc('sp_createUser', (_name, _email, _hashed_password))
-            data = cursor.fetchall()
+
+            cur.callproc('sp_createUser',(_name, _email, _hashed_password))
+            data = cur.fetchall()
 
             if len(data) is 0:
                 conn.commit()
-                return json.dumps({'message': 'User created successfully !'})
+                return jsonify({'message': 'User created successfully !'})
             else:
-                return json.dumps({'error': str(data[0])})
+                return jsonify({'error': str(data[0])})
         else:
-            return json.dumps({'html': '<span>Enter the required fields</span>'})
+            return jsonify({'html': '<span>Enter the required fields</span>'})
 
     except Exception as e:
-        return json.dumps({'error': str(e)})
+        return jsonify({'error!!': str(e)})
 
 
 
