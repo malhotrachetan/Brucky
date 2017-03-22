@@ -33,7 +33,7 @@ def signUp():
         # validate the received values
         if _name and _email and _password:
 
-            # All Good, let's call MySQL
+            # calling mysql stored procedures for making a new user
 
             conn = mysql.connect()
             cur = conn.cursor()
@@ -49,7 +49,7 @@ def signUp():
                 return jsonify({'error': str(data[0])})
         else:
             return jsonify({'html': '<span>Enter the required fields</span>'})
-
+    #output the exception in the web console
     except Exception as e:
         return jsonify({'error!!': str(e)})
 
