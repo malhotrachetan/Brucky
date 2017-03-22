@@ -6,10 +6,17 @@ footer {
 
 }
 .jumbotron{
-    background: darkslategray;
+    background: dimgray;
 }
 
 body {
 
-    background: ghostwhite;
+    background: darkgray;
+
 }
+
+img{
+    width: 15%;
+    height: 15%;
+}
+
