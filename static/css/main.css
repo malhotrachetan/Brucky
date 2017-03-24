@@ -1,22 +1,18 @@
 footer {
    position:absolute;
    bottom:0;
+    width: 1150px;
+   height:60px;   /* Height of the footer */
+
+}
+
+
+
+
+footer {
+   position:absolute;
+   bottom:0;
    width:100%;
    height:60px;   /* Height of the footer */
 
 }
-.jumbotron{
-    background: dimgray;
-}
-
-body {
-
-    background: darkgray;
-
-}
-
-img{
-    width: 15%;
-    height: 15%;
-}
-

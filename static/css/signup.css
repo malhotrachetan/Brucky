@@ -1,8 +1,3 @@
-body{
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #3c3c3c;
-}
 
 .form-signin{
     max-width: 330px;
@@ -49,8 +44,4 @@ footer {
     margin-bottom: 10px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-}
-
-.foo{
-    background-color: #1b6d85;
 }
