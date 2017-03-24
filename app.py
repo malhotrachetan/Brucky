@@ -17,6 +17,21 @@ mysql.init_app(app)
 def main():
     return render_template('main.html')
 
+@app.route("/showSignin")
+def showSignin():
+    return render_template('signin.html')
+
+
+@app.route("/validateLogin",methods=["POST"])
+def validateLogin():
+
+    try:
+        _email=request.form['inputEmail']
+        _password=request.form['inputPassword']
+
+    except Exception as e:
+        return render_template('error.html',error=str(e))
+
 
 @app.route('/showSignUp')
 def showSignUp():
@@ -52,6 +67,9 @@ def signUp():
     #output the exception in the web console
     except Exception as e:
         return jsonify({'error!!': str(e)})
+
+
+
 
 
 
