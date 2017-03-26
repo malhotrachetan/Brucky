@@ -4,6 +4,7 @@ from werkzeug import *
 
 mysql = MySQL()
 app = Flask(__name__)
+app.secret_key="What if I don't give you the key?"
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -25,9 +26,26 @@ def showSignUp():
 #signin
 @app.route("/showSignin")
 def showSignin():
-    return render_template('signin.html')
+    if session.get('user'):
+        return render_template('userHome.html')
+    else:
+        return render_template('signin.html')
 
+#userHome
+@app.route("/userHome")
+def userHome():
+    if session.get('user'):
+        return render_template('userHome.html')
+    else:
+        return render_template('error.html',error = "Unauthorized access")
 
+#method for logout
+@app.route("/logout")
+def logout():
+    session.pop('user',None)
+    return redirect("/")
+
+#validating the signin/login
 @app.route("/validateLogin",methods=["POST"])
 def validateLogin():
 
@@ -43,12 +61,19 @@ def validateLogin():
 
         if len(data)>0:
             if check_password_hash(str(data[0][3]),_password):
-                return 
+                return redirect("/userHome")
+            else:
+                return render_template("error.html",error="Wrong email or password!!")
+        else:
+            return render_template("error.html",error="Wrong email or password!!")
+
+    except Exception as e:
+        return render_template('error.html',error=str(e))
 
 
 
 
-
+#logic for signup
 @app.route('/signUp', methods=['POST', 'GET'])
 def signUp():
     try:
@@ -67,12 +92,16 @@ def signUp():
 
             cur.callproc('sp_createUser',(_name, _email, _hashed_password))
             data = cur.fetchall()
+            check = cur.execute('select user_email from table_user where user_email=p_email')
 
             if len(data) is 0:
                 conn.commit()
                 return jsonify({'message': 'User created successfully !'})
+            elif check == _email:
+                return render_template('userHome.html')
             else:
                 return jsonify({'error': str(data[0])})
+
         else:
             return jsonify({'html': '<span>Enter the required fields</span>'})
     #output the exception in the web console

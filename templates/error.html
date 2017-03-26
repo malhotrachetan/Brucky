@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Brucky</title>
+    <title>Unauthorized acces::Brucky</title>
     <link href="../static/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../static/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
@@ -12,19 +12,29 @@
 </head>
 <body>
     <div class="container">
-
+        <div class="header">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation"  class="active"><a href="/">Home</a></li>
+                <li role="presentation" ><a href="/showSignin">Sign In</a></li>
+                <li role="presentation"><a href="/showSignup">Sign Up</a></li>
+            </ul>
+        </nav>
         <h2 class="text-muted">Brucky</h2>
     </div>
     <div class="jumbotron">
         <h1 align="center">{{error}}</h1>
-
         </div>
-        <div class="foot">
-        <footer>
-            <h4>&copy; Brucky 2017</h4>
+
+        <footer id="footer">
+    <hr>
+            <h3>&copy; Brucky 2017</h3>
         </footer>
-            </div>
+
     </div>
+</div>
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
  <script src="../static/js/jquery-3.1.1.min.js"></script>
 <script src="../static/bootstrap/js/bootstrap.min.js"></script>
