@@ -42,11 +42,11 @@ def userHome():
 #method for logout
 @app.route("/logout")
 def logout():
-    session.pop('user',None)
+    session.pop('user')
     return redirect("/")
 
 #validating the signin/login
-@app.route("/validateLogin",methods=["POST"])
+@app.route("/validateLogin",methods=['POST','GET'])
 def validateLogin():
 
     try:
@@ -55,9 +55,9 @@ def validateLogin():
 
         #connect to mysql
         con=mysql.connect()
-        cursor=con.cursor()
-        cursor.callproc('sp_validateLogin',(_email,))
-        data=cursor.fetchall()
+        cur=con.cursor()
+        cur.callproc('sp_validateLogin',(_email))
+        data=cur.fetchall()
 
         if len(data)>0:
             if check_password_hash(str(data[0][3]),_password):
@@ -76,6 +76,7 @@ def validateLogin():
 #logic for signup
 @app.route('/signUp', methods=['POST', 'GET'])
 def signUp():
+
     try:
         _name = request.form['inputName']
         _email = request.form['inputEmail']
@@ -115,3 +116,4 @@ def signUp():
 
 if __name__ == "__main__":
     app.run()
+    app.debug=True
