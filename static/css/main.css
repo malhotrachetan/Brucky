@@ -16,3 +16,8 @@ footer {
    height:60px;   /* Height of the footer */
 
 }
+
+
+body{
+   background-size: cover;
+}
