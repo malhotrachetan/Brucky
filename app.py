@@ -1,6 +1,6 @@
 from flask import *
 from flaskext.mysql import MySQL
-from werkzeug import generate_password_hash
+from werkzeug import *
 
 mysql = MySQL()
 app = Flask(__name__)
@@ -12,11 +12,17 @@ app.config['MYSQL_DATABASE_DB'] = 'brucky'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
-
+#mainpage
 @app.route('/')
 def main():
     return render_template('main.html')
 
+#signup
+@app.route('/showSignUp')
+def showSignUp():
+    return render_template('signup.html')
+
+#signin
 @app.route("/showSignin")
 def showSignin():
     return render_template('signin.html')
@@ -29,13 +35,18 @@ def validateLogin():
         _email=request.form['inputEmail']
         _password=request.form['inputPassword']
 
-    except Exception as e:
-        return render_template('error.html',error=str(e))
+        #connect to mysql
+        con=mysql.connect()
+        cursor=con.cursor()
+        cursor.callproc('sp_validateLogin',(_email,))
+        data=cursor.fetchall()
+
+        if len(data)>0:
+            if check_password_hash(str(data[0][3]),_password):
+                return 
 
 
-@app.route('/showSignUp')
-def showSignUp():
-    return render_template('signup.html')
+
 
 
 @app.route('/signUp', methods=['POST', 'GET'])
